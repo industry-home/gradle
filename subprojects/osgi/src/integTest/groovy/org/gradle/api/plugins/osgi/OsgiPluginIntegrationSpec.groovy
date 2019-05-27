@@ -31,7 +31,8 @@ import java.util.jar.Manifest
 class OsgiPluginIntegrationSpec extends AbstractIntegrationSpec {
     def setup() {
         executer.beforeExecute {
-            expectDeprecationWarning()
+            // deprecated the plugin itself and the 'runtime' configuration which is used for the classpath
+            expectDeprecationWarnings(2)
         }
     }
 
@@ -164,6 +165,8 @@ class OsgiPluginIntegrationSpec extends AbstractIntegrationSpec {
 
     @Issue("GRADLE-3487")
     def "generates import package attributes when the package is available in multiple bundles"() {
+        executer.noDeprecationChecks()
+
         given:
         buildFile << """
             apply plugin: 'java'

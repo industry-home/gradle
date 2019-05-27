@@ -32,7 +32,8 @@ class OsgiProjectSampleIntegrationTest extends AbstractIntegrationSpec {
 
     def setup() {
         executer.beforeExecute {
-            expectDeprecationWarning()
+            // deprecated the plugin itself and the 'runtime' configuration which is used for the classpath
+            expectDeprecationWarnings(2)
         }
         executer.withRepositoryMirrors()
     }
