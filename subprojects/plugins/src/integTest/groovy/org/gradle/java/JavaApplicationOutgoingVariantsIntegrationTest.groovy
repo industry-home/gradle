@@ -70,9 +70,15 @@ project(':consumer') {
 """
     }
 
+    private resolve() {
+        // this test uses all configurations including the deprecated 'compile' and 'runtime'
+        executer.expectDeprecationWarnings(2)
+        succeeds "resolve"
+    }
+    
     def "provides runtime JAR as default variant"() {
         when:
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:compileJava", ":other-java:processResources", ":other-java:classes", ":other-java:jar", ":java:compileJava", ":java:processResources", ":java:classes", ":java:jar", ":consumer:resolve")
@@ -90,7 +96,7 @@ project(':consumer') {
             }
 """
 
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:compileJava", ":other-java:processResources", ":other-java:classes", ":other-java:jar", ":java:compileJava", ":java:processResources", ":java:classes", ":java:jar", ":consumer:resolve")
@@ -111,7 +117,7 @@ project(':consumer') {
 """
 
         when:
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:compileJava", ":java:compileJava", ":java:processResources", ":java:classes", ":java:jar", ":consumer:resolve")
@@ -129,7 +135,7 @@ project(':consumer') {
             }
 """
 
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:compileJava", ":java:compileJava", ":java:processResources", ":java:classes", ":java:jar", ":consumer:resolve")
@@ -154,7 +160,7 @@ project(':consumer') {
             }
 """
         when:
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:compileJava", ":other-java:processResources", ":other-java:classes", ":other-java:jar", ":java:compileJava", ":java:processResources", ":java:classes", ":java:jar", ":consumer:resolve")
@@ -172,7 +178,7 @@ project(':consumer') {
             }
 """
 
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:compileJava", ":other-java:processResources", ":other-java:classes", ":other-java:jar", ":java:compileJava", ":java:processResources", ":java:classes", ":java:jar", ":consumer:resolve")
@@ -196,7 +202,7 @@ project(':consumer') {
             }
 """
         when:
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:compileJava", ":other-java:processResources", ":other-java:classes", ":other-java:jar", ":java:compileJava", ":java:processResources", ":java:classes", ":java:jar", ":consumer:resolve")
@@ -215,7 +221,7 @@ project(':consumer') {
 """
 
         when:
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:compileJava", ":java:compileJava", ":consumer:resolve")
@@ -233,7 +239,7 @@ project(':consumer') {
             }
 """
 
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:compileJava", ":java:compileJava", ":consumer:resolve")
@@ -253,7 +259,7 @@ project(':consumer') {
 """
 
         when:
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:processResources", ":java:processResources", ":consumer:resolve")
@@ -271,7 +277,7 @@ project(':consumer') {
             }
 """
 
-        succeeds "resolve"
+        resolve()
 
         then:
         result.assertTasksExecuted(":other-java:processResources", ":java:processResources", ":consumer:resolve")

@@ -36,7 +36,11 @@ class GroovyJavaLibraryInteractionIntegrationTest extends AbstractDependencyReso
     @Issue("https://github.com/gradle/gradle/issues/7398")
     @Unroll
     def "selects #expected output when #consumerPlugin plugin adds a project dependency to #consumerConf and producer has java-library=#groovyWithJavaLib"(
-            String consumerPlugin, String consumerConf, boolean groovyWithJavaLib, String expected) {
+            String consumerPlugin, String consumerConf, boolean groovyWithJavaLib, String expected, boolean deprecatedConfiguration) {
+        if (deprecatedConfiguration) {
+            executer.expectDeprecationWarning()
+        }
+
         given:
         multiProjectBuild('issue7398', ['groovyLib', 'javaLib']) {
             file('groovyLib').with {
@@ -96,17 +100,17 @@ class GroovyJavaLibraryInteractionIntegrationTest extends AbstractDependencyReso
         }
 
         where:
-        consumerPlugin | consumerConf     | groovyWithJavaLib | expected
-        'java-library' | 'api'            | true              | "classes"
-        'java-library' | 'api'            | false             | "jar"
-        'java-library' | 'compile'        | true              | "classes"
-        'java-library' | 'compile'        | false             | "jar"
-        'java-library' | 'implementation' | true              | "classes"
-        'java-library' | 'implementation' | false             | "jar"
+        consumerPlugin | consumerConf     | groovyWithJavaLib | expected  | deprecatedConfiguration
+        'java-library' | 'api'            | true              | "classes" | false
+        'java-library' | 'api'            | false             | "jar"     | false
+        'java-library' | 'compile'        | true              | "classes" | true
+        'java-library' | 'compile'        | false             | "jar"     | true
+        'java-library' | 'implementation' | true              | "classes" | false
+        'java-library' | 'implementation' | false             | "jar"     | false
 
-        'java'         | 'compile'        | true              | "classes"
-        'java'         | 'compile'        | false             | "jar"
-        'java'         | 'implementation' | true              | "classes"
-        'java'         | 'implementation' | false             | "jar"
+        'java'         | 'compile'        | true              | "classes" | true
+        'java'         | 'compile'        | false             | "jar"     | true
+        'java'         | 'implementation' | true              | "classes" | false
+        'java'         | 'implementation' | false             | "jar"     | false
     }
 }
