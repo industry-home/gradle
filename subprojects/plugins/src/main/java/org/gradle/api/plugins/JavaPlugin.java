@@ -148,6 +148,7 @@ public class JavaPlugin implements Plugin<ProjectInternal> {
      *
      * @deprecated Users should prefer {@link #API_CONFIGURATION_NAME} or {@link #IMPLEMENTATION_CONFIGURATION_NAME}.
      */
+    @Deprecated
     public static final String COMPILE_CONFIGURATION_NAME = "compile";
 
     /**
@@ -162,6 +163,7 @@ public class JavaPlugin implements Plugin<ProjectInternal> {
      *
      * @deprecated Consumers should use {@link #RUNTIME_ELEMENTS_CONFIGURATION_NAME} instead.
      */
+    @Deprecated
     public static final String RUNTIME_CONFIGURATION_NAME = "runtime";
 
     /**
@@ -202,6 +204,12 @@ public class JavaPlugin implements Plugin<ProjectInternal> {
     @Incubating
     public static final String ANNOTATION_PROCESSOR_CONFIGURATION_NAME = "annotationProcessor";
 
+    /**
+     * The name of the test compile dependencies configuration.
+     *
+     * @deprecated Use {@link #TEST_IMPLEMENTATION_CONFIGURATION_NAME} instead.
+     */
+    @Deprecated
     public static final String TEST_COMPILE_CONFIGURATION_NAME = "testCompile";
 
     /**
