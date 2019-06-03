@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 the original author or authors.
+ * Copyright 2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,35 @@
  * limitations under the License.
  */
 
-package org.gradle.tooling.internal.provider.test;
+package org.gradle.tooling.events.test.internal;
 
-import org.gradle.tooling.internal.protocol.events.InternalTestDescriptor;
 import org.gradle.tooling.internal.protocol.test.InternalDebugOptionsRequest;
-import org.gradle.tooling.internal.protocol.test.InternalJvmTestRequest;
 
-import java.util.Collection;
+public class DefaultDebugOptionsDescriptor implements InternalDebugOptionsRequest {
 
-/**
- * @since 2.7-rc-1
- */
-public interface ProviderInternalTestExecutionRequest {
-    Collection<InternalTestDescriptor> getTestExecutionDescriptors();
-    Collection<String> getTestClassNames();
-    Collection<InternalJvmTestRequest> getInternalJvmTestRequests(Collection<InternalJvmTestRequest> defaults);
-    InternalDebugOptionsRequest getDebugOptions();
+    private int port = -1;
+    private boolean suspend = false;
+
+    @Override
+    public int getPort() {
+        return this.port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    @Override
+    public boolean isDebugMode() {
+        return port > 0;
+    }
+
+    @Override
+    public boolean isSuspend() {
+        return suspend;
+    }
+
+    public void setSuspend(boolean suspend) {
+        this.suspend = suspend;
+    }
 }

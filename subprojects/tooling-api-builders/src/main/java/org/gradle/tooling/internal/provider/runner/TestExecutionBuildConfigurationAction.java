@@ -30,6 +30,7 @@ import org.gradle.tooling.internal.protocol.events.InternalTestDescriptor;
 import org.gradle.tooling.internal.protocol.test.InternalJvmTestRequest;
 import org.gradle.tooling.internal.provider.TestExecutionRequestAction;
 import org.gradle.tooling.internal.provider.events.DefaultTestDescriptor;
+import org.gradle.tooling.internal.protocol.test.InternalDebugOptionsRequest;
 
 import java.util.*;
 
@@ -57,6 +58,14 @@ class TestExecutionBuildConfigurationAction implements BuildConfigurationAction 
             task.setIgnoreFailures(true);
             task.getFilter().setFailOnNoMatchingTests(false);
             task.getOutputs().upToDateWhen(Specs.SATISFIES_NONE);
+            InternalDebugOptionsRequest debugOptions = testExecutionRequest.getDebugOptions();
+            if (debugOptions.isDebugMode()) {
+                // TODO (donat) remove existing debug options from JVM arguments
+                List<String> jvmArgs = new ArrayList<>(task.getJvmArgs().size() + 1);
+                jvmArgs.addAll(task.getJvmArgs());
+                jvmArgs.add("-agentlib:jdwp=transport=dt_socket,server=y,suspend=" + (debugOptions.isSuspend() ? "y" : "n") + ",address=" + debugOptions.getPort());
+                task.setJvmArgs(jvmArgs);
+            }
         }
     }
 

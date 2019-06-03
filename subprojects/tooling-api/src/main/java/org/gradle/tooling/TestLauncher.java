@@ -82,6 +82,8 @@ public interface TestLauncher extends ConfigurableLauncher<TestLauncher> {
      */
     TestLauncher withJvmTestMethods(String testClass, Iterable<String> methods);
 
+    TestLauncher withDebugOptions(int port, boolean suspend);
+
     /**
      * Executes the tests, blocking until complete.
      *
