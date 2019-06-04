@@ -49,6 +49,14 @@
             "member": "Method org.gradle.api.publish.ivy.tasks.PublishToIvyRepository.getDuplicatePublicationTracker()",
             "acceptation": "Injected service",
             "changes": []
+        },
+        {
+            "type": "org.gradle.api.tasks.compile.GroovyCompile",
+            "member": "Method org.gradle.api.tasks.compile.GroovyCompile.getCompiler()",
+            "acceptation": "Removed",
+            "changes": [
+                "Method has been removed"
+            ]
         }
     ]
 }

@@ -22,6 +22,7 @@ dependencies {
     implementation(project(":platformJvm"))
     implementation(project(":languageJvm"))
     implementation(project(":languageJava"))
+    implementation(project(":snapshots"))
 
     implementation(library("slf4j_api"))
     implementation(library("groovy"))

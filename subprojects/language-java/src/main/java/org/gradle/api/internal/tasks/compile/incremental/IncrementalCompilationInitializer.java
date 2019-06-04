@@ -104,13 +104,17 @@ class IncrementalCompilationInitializer {
             String path = staleClass.replaceAll("\\.", "/");
             filesToDelete.include(path.concat(".class"));
             filesToDelete.include(path.concat(".java"));
+            filesToDelete.include(path.concat(".groovy"));
             filesToDelete.include(path.concat(".h"));
             filesToDelete.include(path.concat("$*.class"));
             filesToDelete.include(path.concat("$*.java"));
+            filesToDelete.include(path.concat("$*.groovy"));
             filesToDelete.include(path.concat("$*.h"));
 
             sourceToCompile.include(path.concat(".java"));
+            sourceToCompile.include(path.concat(".groovy"));
             sourceToCompile.include(path.concat("$*.java"));
+            sourceToCompile.include(path.concat("$*.groovy"));
         }
     }
 

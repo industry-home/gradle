@@ -42,6 +42,7 @@ public class MinimalJavaCompileOptions implements Serializable {
     private boolean listFiles;
     private boolean verbose;
     private boolean warnings;
+    private boolean incremental;
     private File annotationProcessorGeneratedSourcesDirectory;
     private final File headerOutputDirectory;
 
@@ -62,6 +63,7 @@ public class MinimalJavaCompileOptions implements Serializable {
         this.warnings = compileOptions.isWarnings();
         this.annotationProcessorGeneratedSourcesDirectory = compileOptions.getAnnotationProcessorGeneratedSourcesDirectory();
         this.headerOutputDirectory = compileOptions.getHeaderOutputDirectory().getAsFile().getOrNull();
+        this.incremental = compileOptions.isIncremental();
     }
 
     @Nullable
@@ -183,5 +185,9 @@ public class MinimalJavaCompileOptions implements Serializable {
 
     public File getHeaderOutputDirectory() {
         return headerOutputDirectory;
+    }
+
+    public boolean isIncremental() {
+        return incremental;
     }
 }

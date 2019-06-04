@@ -17,6 +17,7 @@ package org.gradle.groovy
 
 import org.gradle.api.JavaVersion
 import org.gradle.integtests.fixtures.AbstractDependencyResolutionTest
+import org.gradle.integtests.fixtures.CompiledLanguage
 import org.gradle.integtests.fixtures.resolve.ResolveTestFixture
 import org.gradle.test.fixtures.archive.JarTestFixture
 import spock.lang.Issue
@@ -38,7 +39,7 @@ class GroovyJavaLibraryInteractionIntegrationTest extends AbstractDependencyReso
     def "selects #expected output when #consumerPlugin plugin adds a project dependency to #consumerConf and producer has java-library=#groovyWithJavaLib"(
             String consumerPlugin, String consumerConf, boolean groovyWithJavaLib, String expected) {
         given:
-        multiProjectBuild('issue7398', ['groovyLib', 'javaLib']) {
+        multiProjectBuild('issue7398', ['groovyLib', 'javaLib'], CompiledLanguage.JAVA) {
             file('groovyLib').with {
                 file('src/main/groovy/GroovyClass.groovy') << "public class GroovyClass {}"
                 file('build.gradle') << """
