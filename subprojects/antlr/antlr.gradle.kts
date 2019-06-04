@@ -16,14 +16,29 @@ import org.gradle.gradlebuild.unittestandcompile.ModuleType
  * limitations under the License.
  */
 
+plugins {
+    `java-library`
+}
+
 dependencies {
-    compile(project(":core"))
-    compile(project(":plugins"))
-    compile(project(":workers"))
+    implementation(project(":baseServices"))
+    implementation(project(":logging"))
+    implementation(project(":processServices"))
+    implementation(project(":coreApi"))
+    implementation(project(":modelCore"))
+    implementation(project(":core"))
+    implementation(project(":plugins"))
+    implementation(project(":workers"))
+
+    implementation(library("slf4j_api"))
+    implementation(library("groovy"))
+    implementation(library("guava"))
+    implementation(library("inject"))
 
     compileOnly("antlr:antlr:2.7.7")
 
-    compile(library("slf4j_api"))
+    testImplementation(project(":baseServicesGroovy"))
+    testImplementation(project(":files"))
 }
 
 gradlebuildJava {

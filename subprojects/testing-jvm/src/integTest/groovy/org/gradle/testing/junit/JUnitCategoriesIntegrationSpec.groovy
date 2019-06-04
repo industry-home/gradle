@@ -25,7 +25,7 @@ import org.junit.Rule
 import spock.lang.Issue
 import spock.lang.Unroll
 
-import static org.hamcrest.Matchers.startsWith
+import static org.hamcrest.CoreMatchers.startsWith
 
 class JUnitCategoriesIntegrationSpec extends AbstractSampleIntegrationTest {
 
@@ -63,7 +63,7 @@ class JUnitCategoriesIntegrationSpec extends AbstractSampleIntegrationTest {
         succeeds("test")
 
         then:
-        ":test" in nonSkippedTasks
+        executedAndNotSkipped(":test")
         DefaultTestExecutionResult result = new DefaultTestExecutionResult(testDirectory)
         def testClass = result.testClass("Not a real class name")
         testClass.assertTestCount(1, 0, 0)

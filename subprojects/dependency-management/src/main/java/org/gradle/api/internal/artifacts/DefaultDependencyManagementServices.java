@@ -181,6 +181,7 @@ public class DefaultDependencyManagementServices implements DependencyManagement
         this.parent = parent;
     }
 
+    @Override
     public DependencyResolutionServices create(FileResolver fileResolver, DependencyMetaDataProvider dependencyMetaDataProvider, ProjectFinder projectFinder, DomainObjectContext domainObjectContext) {
         DefaultServiceRegistry services = new DefaultServiceRegistry(parent);
         services.add(FileResolver.class, fileResolver);
@@ -192,6 +193,7 @@ public class DefaultDependencyManagementServices implements DependencyManagement
         return services.get(DependencyResolutionServices.class);
     }
 
+    @Override
     public void addDslServices(ServiceRegistration registration, DomainObjectContext domainObjectContext) {
         registration.addProvider(new DependencyResolutionScopeServices(domainObjectContext));
     }
@@ -627,14 +629,17 @@ public class DefaultDependencyManagementServices implements DependencyManagement
             this.domainObjectContext = domainObjectContext;
         }
 
+        @Override
         public RepositoryHandler getResolveRepositoryHandler() {
             return services.get(RepositoryHandler.class);
         }
 
+        @Override
         public ConfigurationContainerInternal getConfigurationContainer() {
             return services.get(ConfigurationContainerInternal.class);
         }
 
+        @Override
         public DependencyHandler getDependencyHandler() {
             return services.get(DependencyHandler.class);
         }
@@ -668,6 +673,7 @@ public class DefaultDependencyManagementServices implements DependencyManagement
             this.services = services;
         }
 
+        @Override
         public RepositoryHandler createRepositoryHandler() {
             Instantiator instantiator = services.get(Instantiator.class);
             BaseRepositoryFactory baseRepositoryFactory = services.get(BaseRepositoryFactory.class);
@@ -675,6 +681,7 @@ public class DefaultDependencyManagementServices implements DependencyManagement
             return instantiator.newInstance(DefaultRepositoryHandler.class, baseRepositoryFactory, instantiator, callbackDecorator);
         }
 
+        @Override
         public ArtifactPublisher createArtifactPublisher() {
             DefaultArtifactPublisher publisher = new DefaultArtifactPublisher(
                 services.get(LocalConfigurationMetadataBuilder.class),

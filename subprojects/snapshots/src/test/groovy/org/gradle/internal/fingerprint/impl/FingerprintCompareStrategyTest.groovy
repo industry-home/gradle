@@ -258,12 +258,12 @@ class FingerprintCompareStrategyTest extends Specification {
     def "detects no change when file move results in unchanged normalized path (NormalizedPathFingerprintCompareStrategy)"() {
         changes(NORMALIZED, true, [
             "moved/input": fingerprint("input", 1),
-             "unchangedFile": fingerprint("unchangedFile", 2),
-             "changedFile": fingerprint("changedFile", 4)
+            "unchangedFile": fingerprint("unchangedFile", 2),
+            "changedFile": fingerprint("changedFile", 4)
         ], [
             "original/input": fingerprint("input", 1),
-             "unchangedFile": fingerprint("unchangedFile", 2),
-             "changedFile": fingerprint("changedFile", 3)
+            "unchangedFile": fingerprint("unchangedFile", 2),
+            "changedFile": fingerprint("changedFile", 3)
         ]) == [modified("changedFile")]
     }
 

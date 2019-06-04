@@ -19,7 +19,7 @@ import org.gradle.integtests.fixtures.WellBehavedPluginTest
 import org.gradle.integtests.fixtures.executer.GradleContextualExecuter
 import spock.lang.IgnoreIf
 
-import static org.hamcrest.Matchers.containsString
+import static org.hamcrest.CoreMatchers.containsString
 
 class JDependPluginIntegrationTest extends WellBehavedPluginTest {
     def setup() {
@@ -62,14 +62,18 @@ class JDependPluginIntegrationTest extends WellBehavedPluginTest {
         goodCode()
 
         expect:
-        succeeds("jdependMain") && ":jdependMain" in nonSkippedTasks
-        succeeds(":jdependMain") && ":jdependMain" in skippedTasks
+        succeeds("jdependMain")
+        executedAndNotSkipped(":jdependMain")
+
+        succeeds(":jdependMain")
+        skipped(":jdependMain")
 
         when:
         file("build/reports/jdepend/main.xml").delete()
 
         then:
-        succeeds("jdependMain") && ":jdependMain" in nonSkippedTasks
+        succeeds("jdependMain")
+        executedAndNotSkipped(":jdependMain")
     }
 
     @IgnoreIf({GradleContextualExecuter.parallel})

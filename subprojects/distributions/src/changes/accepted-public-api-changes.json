@@ -1,9 +1,53 @@
 {
     "acceptedApiChanges": [
         {
-            "type": "org.gradle.platform.base.binary.BaseBinarySpec",
-            "member": "Method org.gradle.platform.base.binary.BaseBinarySpec.create(java.lang.Class,java.lang.Class,org.gradle.platform.base.internal.ComponentSpecIdentifier,org.gradle.model.internal.core.MutableModelNode,org.gradle.model.internal.core.MutableModelNode,org.gradle.internal.reflect.Instantiator,org.gradle.model.internal.core.NamedEntityInstantiator,org.gradle.api.internal.CollectionCallbackActionDecorator,org.gradle.api.internal.collections.DomainObjectCollectionFactory)",
-            "acceptation": "Change to internal factory method",
+            "type": "org.gradle.api.publish.maven.tasks.AbstractPublishToMaven",
+            "member": "Method org.gradle.api.publish.maven.tasks.AbstractPublishToMaven.getMavenPublishers()",
+            "acceptation": "Injected Service",
+            "changes": []
+        },
+        {
+            "type": "org.gradle.api.publish.maven.tasks.AbstractPublishToMaven",
+            "member": "Method org.gradle.api.publish.maven.tasks.AbstractPublishToMaven.getMavenRepositoryLocator()",
+            "acceptation": "Replaced by factory service: MavenPublishers",
+            "changes": [
+                "Method has been removed"
+            ]
+        },
+        {
+            "type": "org.gradle.api.publish.maven.tasks.PublishToMavenLocal",
+            "member": "Class org.gradle.api.publish.maven.tasks.PublishToMavenLocal",
+            "acceptation": "Replaced by factory service: MavenPublishers",
+            "changes": [
+                "org.gradle.api.publish.maven.tasks.AbstractPublishToMaven.getMavenRepositoryLocator()"
+            ]
+        },
+        {
+            "type": "org.gradle.api.publish.maven.tasks.PublishToMavenRepository",
+            "member": "Class org.gradle.api.publish.maven.tasks.PublishToMavenRepository",
+            "acceptation": "Replaced by factory service: MavenPublishers",
+            "changes": [
+                "org.gradle.api.publish.maven.tasks.AbstractPublishToMaven.getMavenRepositoryLocator()"
+            ]
+        },
+        {
+            "type": "org.gradle.api.publish.maven.tasks.PublishToMavenRepository",
+            "member": "Method org.gradle.api.publish.maven.tasks.PublishToMavenRepository.getRepositoryTransportFactory()",
+            "acceptation": "Replaced by factory service: MavenPublishers",
+            "changes": [
+                "Method has been removed"
+            ]
+        },
+        {
+            "type": "org.gradle.api.publish.maven.tasks.AbstractPublishToMaven",
+            "member": "Method org.gradle.api.publish.maven.tasks.AbstractPublishToMaven.getDuplicatePublicationTracker()",
+            "acceptation": "Injected service",
+            "changes": []
+        },
+        {
+            "type": "org.gradle.api.publish.ivy.tasks.PublishToIvyRepository",
+            "member": "Method org.gradle.api.publish.ivy.tasks.PublishToIvyRepository.getDuplicatePublicationTracker()",
+            "acceptation": "Injected service",
             "changes": []
         }
     ]

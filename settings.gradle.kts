@@ -33,6 +33,8 @@ include("dependencyManagement")
 include("wrapper")
 include("cli")
 include("launcher")
+include("launcherBootstrap")
+include("launcherStartup")
 include("messaging")
 include("resources")
 include("resourcesHttp")
@@ -115,6 +117,7 @@ include("kotlinDslToolingModels")
 include("kotlinDslToolingBuilders")
 include("kotlinDslTestFixtures")
 include("kotlinDslIntegTests")
+include("workerProcesses")
 
 val upperCaseLetters = "\\p{Upper}".toRegex()
 
@@ -127,15 +130,8 @@ rootProject.name = "gradle"
 // The intent is for this list to diminish until it disappears.
 val groovyBuildScriptProjects = hashSetOf(
     "distributions",
-    "wrapper",
     "docs",
-    "performance",
-    "testing-base",
-    "testing-jvm",
-    "testing-junit-platform",
-    "test-kit",
-    "smoke-test",
-    "version-control"
+    "performance"
 )
 
 fun buildFileNameFor(projectDirName: String) =

@@ -120,6 +120,7 @@ public class ProjectScopeServices extends DefaultServiceRegistry {
         this.project = project;
         this.loggingManagerInternalFactory = loggingManagerInternalFactory;
         register(new Action<ServiceRegistration>() {
+            @Override
             public void execute(ServiceRegistration registration) {
                 registration.add(DomainObjectContext.class, project);
                 parent.get(DependencyManagementServices.class).addDslServices(registration, project);
@@ -170,6 +171,7 @@ public class ProjectScopeServices extends DefaultServiceRegistry {
 
     protected TemporaryFileProvider createTemporaryFileProvider() {
         return new DefaultTemporaryFileProvider(new Factory<File>() {
+            @Override
             public File create() {
                 return new File(project.getBuildDir(), "tmp");
             }
@@ -271,6 +273,7 @@ public class ProjectScopeServices extends DefaultServiceRegistry {
 
     protected ServiceRegistryFactory createServiceRegistryFactory(final ServiceRegistry services) {
         return new ServiceRegistryFactory() {
+            @Override
             public ServiceRegistry createFor(Object domainObject) {
                 throw new UnsupportedOperationException();
             }
@@ -286,6 +289,7 @@ public class ProjectScopeServices extends DefaultServiceRegistry {
     }
 
     private class ProjectBackedModuleMetaDataProvider implements DependencyMetaDataProvider {
+        @Override
         public Module getModule() {
             return new ProjectBackedModule(project);
         }

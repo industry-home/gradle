@@ -40,15 +40,15 @@ import org.gradle.internal.reflect.NoSuchMethodException;
 import org.gradle.internal.reflect.NoSuchPropertyException;
 import org.gradle.internal.reflect.PropertyAccessor;
 import org.gradle.internal.reflect.PropertyMutator;
+import org.gradle.internal.stream.EncodedStream;
 import org.gradle.internal.util.Trie;
-import org.gradle.process.internal.streams.EncodedStream;
 import org.gradle.process.internal.worker.GradleWorkerMain;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Type;
+import org.objectweb.asm.commons.ClassRemapper;
 import org.objectweb.asm.commons.Remapper;
-import org.objectweb.asm.commons.RemappingClassAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,6 +107,7 @@ public class WorkerProcessClassPathProvider implements ClassPathProvider, Closea
         this.moduleRegistry = moduleRegistry;
     }
 
+    @Override
     public ClassPath findClassPath(String name) {
         if (name.equals("WORKER_MAIN")) {
             synchronized (lock) {
@@ -146,6 +147,7 @@ public class WorkerProcessClassPathProvider implements ClassPathProvider, Closea
         return null;
     }
 
+    @Override
     public void close() {
         // This isn't quite right. Should close the worker classpath cache once we're finished with the worker processes. This may be before the end of this build
         // or they may be used across multiple builds
@@ -168,6 +170,7 @@ public class WorkerProcessClassPathProvider implements ClassPathProvider, Closea
     private static class CacheInitializer implements Action<PersistentCache> {
         private final WorkerClassRemapper remapper = new WorkerClassRemapper();
 
+        @Override
         public void execute(PersistentCache cache) {
             try {
                 File jarFile = jarFile(cache);
@@ -233,7 +236,7 @@ public class WorkerProcessClassPathProvider implements ClassPathProvider, Closea
                 inputStream.close();
             }
             ClassWriter classWriter = new ClassWriter(0);
-            ClassVisitor remappingVisitor = new RemappingClassAdapter(classWriter, remapper);
+            ClassVisitor remappingVisitor = new ClassRemapper(classWriter, remapper);
             classReader.accept(remappingVisitor, ClassReader.EXPAND_FRAMES);
             byte[] remappedClass = classWriter.toByteArray();
             String remappedClassName = remapper.map(internalName).concat(".class");
@@ -242,13 +245,8 @@ public class WorkerProcessClassPathProvider implements ClassPathProvider, Closea
         }
 
         private static class WorkerClassRemapper extends Remapper {
-            private static final String SYSTEM_APP_WORKER_INTERNAL_NAME = Type.getInternalName(SystemApplicationClassLoaderWorker.class);
-
             @Override
             public String map(String typeName) {
-                if (typeName.equals(SYSTEM_APP_WORKER_INTERNAL_NAME)) {
-                    return typeName;
-                }
                 if (typeName.startsWith("org/gradle/")) {
                     return "worker/" + typeName;
                 }

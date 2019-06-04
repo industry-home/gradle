@@ -147,6 +147,7 @@ public class DefaultTransformer extends AbstractTransformer<TransformAction> {
         return isolatedParameters != null;
     }
 
+    @Override
     public boolean requiresDependencies() {
         return requiresDependencies;
     }
@@ -180,10 +181,7 @@ public class DefaultTransformer extends AbstractTransformer<TransformAction> {
             parameterPropertyWalker.visitProperties(parameterObject, ParameterValidationContext.NOOP, new PropertyVisitor.Adapter() {
                 @Override
                 public void visitInputFileProperty(String propertyName, boolean optional, boolean skipWhenEmpty, boolean incremental, @Nullable Class<? extends FileNormalizer> fileNormalizer, PropertyValue value, InputFilePropertyType filePropertyType) {
-                    Object unpacked = value.call();
-                    if (unpacked != null) {
-                        context.maybeAdd(unpacked);
-                    }
+                    context.add(value.getTaskDependencies());
                 }
             });
         }
