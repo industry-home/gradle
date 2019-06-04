@@ -7,11 +7,6 @@ We would like to thank the following community contributors to this release of G
 Include only their name, impactful features should be called out separately below.
  [Some person](https://github.com/some-person)
 -->
-[Andrew K.](https://github.com/miokowpak),
-[Semyon Levin](https://github.com/remal),
-[wreulicke](https://github.com/wreulicke),
-[John Rodriguez](https://github.com/jrodbx),
-and [Ivo Anjo](https://github.com/ivoanjo).
 
 <!-- 
 ## 1
@@ -25,13 +20,6 @@ details of 2
 ## n
 -->
 
-## Substitute closed Eclipse projects in Buildship
-
-Closed gradle projects in an eclipse workspace can now be substituted for their respective jar files. In addition to this 
-those jars can now be built during Buildship eclipse model synchronization.
-
-The upcoming version of Buildship is required to take advantage of this behavior.
-
 ## Upgrade Instructions
 
 Switch your build to use Gradle @version@ by updating your wrapper:
@@ -42,22 +30,6 @@ See the [Gradle 5.x upgrade guide](userguide/upgrading_version_5.html#changes_@b
 
 <!-- Do not add breaking changes or deprecations here! Add them to the upgrade guide instead. --> 
 
-## Improvements for plugin authors
-
-### Task dependencies are honored for `@Input` properties of type `Property`
-
-TBD - honors dependencies on `@Input` properties.
-
-### Property methods
-
-TBD - added `getLocationOnly()`. 
-
-## Building native software with Gradle
-
-All new C++ documentations including new user manual chapters for [building](userguide/building_cpp_projects.html) and [testing](userguide/cpp_testing.html) C++ projects, [DSL reference for C++ components](dsl/index.html#N10808), [C++ plugins reference chapters](userguide/plugin_reference.html#native_languages) and [Visual Studio and Xcode IDE plugins reference chapters](userguide/plugin_reference.html#ide_integration).
-The [C++ guides](https://gradle.org/guides/?q=Native) were also improved to reflect all the new features available to C++ developers.
-See more information about the [Gradle native project](https://github.com/gradle/gradle-native/blob/master/docs/RELEASE-NOTES.md#changes-included-in-gradle-55).
-
 ## Promoted features
 Promoted features are features that were incubating in previous versions of Gradle but are now supported and subject to backwards compatibility.
 See the User Manual section on the “[Feature Lifecycle](userguide/feature_lifecycle.html)” for more information.
@@ -67,12 +39,6 @@ The following are the features that have been promoted in this Gradle release.
 <!--
 ### Example promoted
 -->
-
-## Incubating support for Groovy compilation avoidance
-
-Gradle now supports experimental compilation avoidance for Groovy. 
-This accelerates Groovy compilation by avoiding re-compiling dependent projects if only non-ABI changes are detected.
-See [Groovy compilation avoidance](userguide/groovy_plugin.html#sec:groovy_compilation_avoidance) for more details.
 
 ## Fixed issues
 
