@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -72,9 +71,14 @@ public class AbiExtractingClasspathResourceHasher implements ResourceHasher {
         if (!isClassFile(zipEntry.getName())) {
             return null;
         }
+<<<<<<< HEAD
 
         byte[] content = new byte[(int)zipEntry.getSize()];
         ByteStreams.readFully(zipInput, content);
+=======
+        byte[] content = new byte[zipEntry.size()];
+        ByteStreams.readFully(zipEntry.getInputStream(), content);
+>>>>>>> Set up Groovy performance template
         return hashClassBytes(content);
     }
 

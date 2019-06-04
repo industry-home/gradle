@@ -47,4 +47,9 @@ public class DefaultEclipseWorkspaceProject implements EclipseWorkspaceProject, 
     public boolean isOpen() {
         return isOpen;
     }
+
+    @Override
+    public int size() {
+        return (int) entry.getSize();
+    }
 }

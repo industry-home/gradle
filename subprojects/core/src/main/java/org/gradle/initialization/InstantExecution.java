@@ -22,5 +22,13 @@ public interface InstantExecution {
 
     void saveTaskGraph();
 
+<<<<<<< HEAD:subprojects/core/src/main/java/org/gradle/initialization/InstantExecution.java
     void loadTaskGraph();
+=======
+    String getName();
+
+    InputStream getInputStream();
+
+    int size();
+>>>>>>> Set up Groovy performance template:subprojects/core/src/main/java/org/gradle/api/internal/changedetection/state/ZipEntry.java
 }

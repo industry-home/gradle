@@ -22,6 +22,11 @@ import org.gradle.instantexecution.serialization.ReadContext
 import org.gradle.instantexecution.serialization.WriteContext
 import org.gradle.instantexecution.serialization.readClass
 import org.gradle.instantexecution.serialization.writeClass
+<<<<<<< HEAD
+=======
+import sun.reflect.ReflectionFactory
+import java.lang.reflect.Constructor
+>>>>>>> Set up Groovy performance template
 
 
 internal
@@ -35,8 +40,13 @@ class BeanCodec : Codec<Any> {
             writeSmallInt(isolate.identities.putInstance(value))
             val beanType = GeneratedSubclasses.unpackType(value)
             writeClass(beanType)
+<<<<<<< HEAD
             beanPropertyWriterFor(beanType).run {
                 writeFieldsOf(value)
+=======
+            BeanFieldSerializer(beanType).run {
+                serialize(value)
+>>>>>>> Set up Groovy performance template
             }
         }
     }
