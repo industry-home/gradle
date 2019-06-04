@@ -1028,4 +1028,76 @@ compileClasspath - Compile classpath for source set 'main'.
 (c) - dependency constraint
 """
     }
+
+    def "excludes deprecated configurations"() {
+        executer.expectDeprecationWarning()
+
+        given:
+        file("settings.gradle") << "include 'a', 'b'"
+
+        buildFile << """
+            subprojects {
+                configurations { 
+                    compile.deprecateForDeclaration('implementation')
+                    'default' { extendsFrom compile }
+                }
+                group = "group"
+                version = 1.0
+            }
+            project(":a") {
+                dependencies { compile project(":b") }
+            }
+        """
+
+        when:
+        run ":a:dependencies"
+
+        then:
+        !output.contains("\ncompile\n")
+    }
+
+    void "treats a configuration that is deprecated for resolving as not resolvable"() {
+        mavenRepo.module("foo", "foo", '1.0').publish()
+        mavenRepo.module("foo", "bar", '2.0').publish()
+
+        file("build.gradle") << """
+            repositories {
+               maven { url "${mavenRepo.uri}" }
+            }
+            configurations {
+                compileOnly.deprecateForResolution("compileClasspath")
+                implementation.extendsFrom compileOnly
+            }
+            dependencies {
+                compileOnly 'foo:foo:1.0'
+                implementation 'foo:bar:2.0'
+            }
+        """
+
+        when:
+        run ":dependencies"
+
+        then:
+        output.contains """
+compileOnly (n)
+\\--- foo:foo:1.0 (n)
+
+implementation
++--- foo:foo:1.0
+\\--- foo:bar:2.0
+
+(n) - Not resolved (configuration is not meant to be resolved)
+"""
+
+        when:
+        run ":dependencies", "--configuration", "compileOnly"
+
+        then:
+        output.contains """
+compileOnly (n)
+\\--- foo:foo:1.0 (n)
+
+(n) - Not resolved (configuration is not meant to be resolved)
+"""
+    }
 }
